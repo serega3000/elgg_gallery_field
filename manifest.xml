@@ -7,7 +7,7 @@
 	<license>GNU General Public License Version 2</license>
 	<requires>
 		<type>elgg_release</type>
-		<version>1.10.0</version>
+		<version>1.9.0</version>
 	</requires>
 	<version>0.0.1</version>
 </plugin_manifest>
