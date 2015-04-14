@@ -18,16 +18,16 @@ function gallery_field_init()
 	
 	//Register actions
 	$action_path = __DIR__."/actions";
-	elgg_register_action("gallery_field/upload", "$action_path/upload.php");
+	elgg_register_action("gallery_field/upload", "$action_path/upload.php");		
 	
 	if(elgg_get_plugin_setting("enable_blog", "gallery_field") == 'yes')
 	{
-		elgg_extend_view('object/blog', 'gallery_field/images_list');	
+		elgg_extend_view('object/blog', 'gallery_field/images_list');			
 	}
 	if(elgg_get_plugin_setting("enable_pages", "gallery_field") == 'yes')
 	{
 		elgg_extend_view('object/page_top', 'gallery_field/images_list');	
-	}
+	}					
 }
 
 function gallery_field_image_page_handler($page)
