@@ -8,7 +8,7 @@ function gallery_field_image_ids_from_value($value)
 {
 	if(strlen($value) == 0 || intval($value) == 0)
 	{
-		return [];
+		return array();
 	}
 	$return_value = array();
 	$value_arr = explode(",", $value);
