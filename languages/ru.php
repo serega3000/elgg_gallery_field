@@ -10,7 +10,10 @@ add_translation('ru', array(
 	'gallery_field:sort_info' => "Сортировка включена. Передвигайте фотографии в нужном вам порядке.",
 	'gallery_field:enable_blog' => "Включить галерею для постов в блоге?",
 	'gallery_field:enable_pages' => "Включить галерею для страниц?",
-	"gallery_field:loading" => "Отправка файлов на сервер... Не перезагружайте страницу."
+	"gallery_field:loading" => "Отправка файлов на сервер... Не перезагружайте страницу.",
+	'gallery_field:only_jpg' => "Поддерживаются только файлы формата jpg",
+	'gallery_field:bad_file' => "Не удалось прочитать файл",
+	'gallery_field:files_uploaded' => "FЗагружено файлов",
 	
 ));
 

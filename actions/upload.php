@@ -42,9 +42,6 @@ for($i = 0; $i < count($files_array['tmp_name']); $i++)
 $entity->$entity_field = implode(",", $image_ids);
 
 
-system_message("New images: " . $count_added);
+system_messages(elgg_echo("gallery_field:files_uploaded").": " . $count_added);
 
 forward("/routes/view/{$entity->guid}/".urlencode($entity->name)."#editor_".$entity_field);
-
-echo implode(",", $return_value);
-

@@ -10,7 +10,11 @@ add_translation('en', array(
 	'gallery_field:sort_info' => "Sorting enabled. Sort photos as you want.",
 	'gallery_field:enable_blog' => "Enable gallery field for blog posts?",
 	'gallery_field:enable_pages' => "Enable gallery field for pages?",
-	"gallery_field:loading" => "Uploading... Do not reload the page."
+	"gallery_field:loading" => "Uploading... Do not reload the page.",
+	'gallery_field:only_jpg' => "Only jpg files supported",
+	'gallery_field:bad_file' => "Bad jpg file",
+	'gallery_field:files_uploaded' => "Files uploaded",
+	
 	
 ));
 

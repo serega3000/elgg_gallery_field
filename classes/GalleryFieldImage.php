@@ -110,24 +110,13 @@ class GalleryFieldImage extends \ElggFile{
 	{	
 		$mime_type = ElggFile::detectMimeType($tmp_name, $type);
 		
-		if(false == in_array($mime_type, array("image/jpeg","image/jpg","image/gif","image/png")))
+		if(false == in_array($mime_type, array("image/jpeg","image/jpg")))
 		{
-			throw new Exception("bad file type");
+			register_error("Only jpg files supported");
+			return null;
 		}
 		
-		$ext = "";
-		switch($mime_type){
-			case "image/jpeg":
-			case "image/jpg":
-				$ext = "jpg";
-				break;
-			case "image/gif":				
-				$ext = "gif";
-				break;
-			case "image/png";
-				$ext = "png";
-				break;
-		}
+		$ext = "jpg";
 		
 		$file = new self();
 		$thumb_file = new ElggFile();		
@@ -142,7 +131,8 @@ class GalleryFieldImage extends \ElggFile{
 		
 		$imgsizearray = getimagesize($tmp_name);
 		if ($imgsizearray == false) {
-			throw new Exception("bad file type");
+			register_error("bad file");
+			return null;
 		}
 
 		$width = $imgsizearray[0];
