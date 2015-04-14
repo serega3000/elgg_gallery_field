@@ -1,4 +1,4 @@
-###Gallery field module for elgg 1.9, 1.10
+#Gallery field module for elgg 1.9, 1.10
 
 This module allow you to add simple gallery to blog posts and pages.
 
@@ -6,11 +6,11 @@ In settings page you can select, enable or disable gallery for blogs or pages.
 
 ##Installing 
 
-#Using composer
+###Using composer
 
 	composer require serega3000/elgg_gallery_field:dev-master
 
-#Manually
+###Manually
 
 	Copy all files from this repository to folder mod/gallery_field of your Elgg installation
 
