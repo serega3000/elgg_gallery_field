@@ -112,7 +112,7 @@ class GalleryFieldImage extends \ElggFile{
 		
 		if(false == in_array($mime_type, array("image/jpeg","image/jpg")))
 		{
-			register_error("Only jpg files supported");
+			register_error(elgg_echo("gallery_field:only_jpg"));
 			return null;
 		}
 		

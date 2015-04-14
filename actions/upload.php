@@ -24,8 +24,9 @@ $count_added = 0;
 
 for($i = 0; $i < count($files_array['tmp_name']); $i++)
 {
-	if(false == in_array($files_array['type'][$i], array("image/jpeg","image/jpg","image/gif","image/png")))
+	if(false == in_array($files_array['type'][$i], array("image/jpeg","image/jpg")))
 	{
+		register_error(elgg_echo("gallery_field:only_jpg"));
 		continue;
 	}
 	
