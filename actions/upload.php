@@ -32,6 +32,11 @@ for($i = 0; $i < count($files_array['tmp_name']); $i++)
 	
 	$file = \GalleryFieldImage::createFromFile($files_array['tmp_name'][$i], $files_array['type'][$i]);
 
+	if($file == null)
+	{
+		continue;
+	}
+	
 	$file->entity_id = $entity_id;
 	$file->save();
 	
