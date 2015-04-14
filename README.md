@@ -16,7 +16,7 @@ In settings page you can select, enable or disable gallery for blogs or pages.
 
 ##Adding to your module
 
-If you writing your own module, you can simply add gallery to you entity view:
+If you writing your own module, you can simply add gallery to your entity view:
 	
 	$body .= elgg_view('gallery_field/images_list', array(
 		'entity' => $entity,
