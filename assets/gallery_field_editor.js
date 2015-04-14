@@ -2,27 +2,32 @@
 	
 	var full_image_container = null;
 	var links = null;
-	var delete_enabled = false;
+	var edit_enabled = false;
 	var upload_button;
 	var delete_button;
 	var delete_images_span;
 	var editor_main = null;
+	var el;
 	
 	var deletingImagesCLick = function(){
 		$(this).toggleClass('deleting');		
 		return false;
 	}
 	
-	var cancelDeleting = function(){
-		editor_main.show();		
-		delete_images_span.hide();
-		delete_enabled = false;
-		links.removeClass('deleting');
-		links.unbind('click',deletingImagesCLick);		
+	var sortingImagesClick = function(){
+		return false;
 	}
 	
-	var init_gallery_editor = function(el){
-		
+	var cancelDeleting = function(){
+		editor_main.slideDown();		
+		delete_images_span.slideUp();
+		edit_enabled = false;
+		links.removeClass('deleting');
+		links.unbind('click',deletingImagesCLick);	
+		el.removeClass('edit_list');
+	}
+	
+	var init_gallery_editor = function(){
 		editor_main = el.find('.editor_main');
 		var upload_form = el.find('form');
 		var upload_field = el.find("form input.upload_input");
@@ -31,24 +36,27 @@
 		delete_button = el.find(".delete-btn");		
 		var delete_cancel_button = el.find(".delete-cancel-btn");
 		var delete_confirm_button = el.find(".delete-confirm-btn");
+		var sort_button = el.find('.sort-btn');
+		var sort_span = el.find('.sort_images');
 		//var images = images
 		
 		upload_field.on('change', function(){				
 			upload_form.submit();			
-			editor_main.hide();
-			editor_main.parent().append("<h1>Loading...</h1>");
+			editor_main.slideUp();
+			el.find('h2.loading').slideDown();
 		});
 		upload_button.click(function(){
 			upload_field.trigger('click');
 		});					
 		
 		delete_button.click(function(){
-			editor_main.hide();
-			delete_images_span.show();
+			editor_main.slideUp();
+			delete_images_span.slideDown();
 			full_image_container.empty();
 			links.blur();
-			delete_enabled = true;
+			edit_enabled = true;
 			links.on('click',deletingImagesCLick);
+			el.addClass('edit_list');
 		});
 		
 		delete_cancel_button.click(function(){
@@ -74,11 +82,46 @@
 							images: delete_ids.join(","),
 							success: function(){
 								cancelDeleting();
+								el.find('.editor').slideUp();
+								el.find('.editor_toggler').slideDown();								
 							}
 						}
 					);					
 				}
 			}
+		});
+		
+		sort_button.click(function(){
+			editor_main.slideUp();
+			sort_span.slideDown();
+			full_image_container.empty();
+			links.blur();
+			edit_enabled = true;
+			links.on('click',sortingImagesClick);
+			el.addClass('edit_list');			
+			el.find('.images .dragger').sortable().on('sortupdate', function(){
+				var image_ids = [];
+				el.find('.images .dragger').children().each(function(index){
+					image_ids.push($(this).find('a').data('image-id'));			
+				});
+				$.post("/gallery_field_image/save_sort",{
+						entity_id: el.data('entity-id'),
+						field: el.data('entity-field'),
+						images: image_ids.join(",")
+					}
+				);	
+			});
+		});
+		
+		el.find('.sort-success-btn').click(function(){
+			el.find('.images .dragger').sortable('destroy');
+			editor_main.slideDown();		
+			sort_span.slideUp();
+			edit_enabled = false;
+			links.unbind('click',sortingImagesClick);	
+			el.removeClass('edit_list');		
+			el.find('.editor').slideUp();
+			el.find('.editor_toggler').slideDown();					
 		});
 		
 	};
@@ -88,10 +131,10 @@
 		
 		links = this.find(".images a");
 		full_image_container = this.find('.image_full');
-		var el = this;
+		el = this;
 		
 		links.focus(function(){
-			if(delete_enabled){
+			if(edit_enabled){
 				this.blur();
 				return;
 			}
@@ -109,7 +152,7 @@
 		});
 		
 		links.click(function(){
-			if(delete_enabled) return true;
+			if(edit_enabled) return true;
 			if(false === $(this).is(":focus")){
 				this.focus();
 			}			
@@ -117,7 +160,7 @@
 		});
 		
 		links.keydown(function(e) {
-			if(delete_enabled) return;
+			if(edit_enabled) return;
 			var link = $(this);
 			if(e.keyCode == 37) { // left
 				var prev = link.parent().prev().find('a');
@@ -139,17 +182,17 @@
 		}
 		
 		this.find('.editor_toggler').click(function(){
-			el.find('.editor').show();
-			$(this).hide();
+			el.find('.editor').slideDown();
+			$(this).slideUp();
 			return false;
 		});
 		
 		this.find('.edit-cancel-btn').click(function(){
-			if(delete_enabled){
+			if(edit_enabled){
 				cancelDeleting();
 			}
-			el.find('.editor').hide();
-			el.find('.editor_toggler').show();
+			el.find('.editor').slideUp();
+			el.find('.editor_toggler').slideDown();
 		});		
 		
 		

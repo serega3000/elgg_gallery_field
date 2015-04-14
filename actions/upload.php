@@ -32,6 +32,9 @@ for($i = 0; $i < count($files_array['tmp_name']); $i++)
 	
 	$file = \GalleryFieldImage::createFromFile($files_array['tmp_name'][$i], $files_array['type'][$i]);
 
+	$file->entity_id = $entity_id;
+	$file->save();
+	
 	array_unshift($image_ids, $file->guid);
 	$count_added++;
 }
@@ -40,7 +43,8 @@ $entity->$entity_field = implode(",", $image_ids);
 
 
 system_message("New images: " . $count_added);
-forward(REFERRER);
+
+forward("/routes/view/{$entity->guid}/".urlencode($entity->name)."#editor_".$entity_field);
 
 echo implode(",", $return_value);
 

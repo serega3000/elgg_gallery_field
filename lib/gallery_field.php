@@ -58,8 +58,6 @@ function gallery_field_delete_images()
 	$entity->$field = implode(",", $new_image_ids);
 	$entity->save();
 	
-	var_dump($new_image_ids);
-	
 	echo "ok";	
 }
 
@@ -100,6 +98,38 @@ function gallery_field_show_image($image_id, $size = "default")
 	
 	
 }
+
+function gallery_field_save_sort()
+{
+	$entity_id = $_POST['entity_id'];
+	$field = $_POST['field'];
+	$sort_images_list = $_POST['images'];
+	$sort_ids = explode(",", $sort_images_list);	
+	
+	$entity = get_entity($entity_id);
+	if(false == $entity->canEdit())
+	{
+		throw new Exception("can`t edit");
+	}	
+	
+	$current_image_ids = gallery_field_image_ids_from_value($entity->$field);
+	
+	if(count($current_image_ids) == 0)
+	{
+		return;
+	}	
+	/**
+	 * check if all values persist in both arrays
+	 */
+	if(count(array_intersect($sort_ids, $current_image_ids)) != count($current_image_ids))
+	{
+		throw new Exception("bad count");
+	}
+	
+	$entity->$field = implode(",", $sort_ids);
+	$entity->save();
+}
+
 /*
 function gallery_field($entity_id, $entity_field)
 {
