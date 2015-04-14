@@ -52,15 +52,6 @@ class GalleryFieldImage extends \ElggFile{
 	}	
 	
 	/**
-	 * Get the URL of this image
-	 *
-	 * @return string
-	 */
-	public function getURL($size = 'small') {	
-		return elgg_normalize_url("gallery_field/image/{$this->guid}/{$size}");
-	}	
-	
-	/**
 	 * Save the uploaded image
 	 *
 	 * @param array $data

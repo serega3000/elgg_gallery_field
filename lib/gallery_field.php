@@ -129,30 +129,3 @@ function gallery_field_save_sort()
 	$entity->$field = implode(",", $sort_ids);
 	$entity->save();
 }
-
-/*
-function gallery_field($entity_id, $entity_field)
-{
-	elgg_load_js('gallery_field_editor');
-	
-	$entity = get_entity($entity_id);	
-	$metadata = elgg_get_metadata(array(
-		'guids' => array($entity_id),
-		'metadata_names' => array($entity_field)
-	));	
-	
-	$title = elgg_echo("gallery_field:edit_images_title");
-	
-	$content = elgg_view('gallery_field/editor', array(
-		'value' => $metadata->value,
-		'entity' => $entity
-	));
-	
-	$body = elgg_view_layout('content', array(
-		'content' => $content,
-		'title' => $title,
-		'filter' => '',
-	));	
-	
-	echo elgg_view_page($title, $body);	
-}*/
