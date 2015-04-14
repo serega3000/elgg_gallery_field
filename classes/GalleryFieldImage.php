@@ -141,11 +141,13 @@ class GalleryFieldImage extends \ElggFile{
 		
 		$file->open("write");
 		$file->write(self::cropImage($tmp_name, $width, $height, 760, 580));
-		$file->close();		
+		$file->close();	
+		$file->access_id = 2;
 		
 		$thumb_file->open("write");
 		$thumb_file->write(self::cropImage($tmp_name, $width, $height, 200, 140));
-		$thumb_file->close();	
+		$thumb_file->close();
+		$thumb_file->access_id = 2;
 		
 		$thumb_file->save();
 		$file->thumb_file_guid = $thumb_file->guid;
