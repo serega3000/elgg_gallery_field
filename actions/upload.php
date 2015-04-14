@@ -49,4 +49,4 @@ $entity->$entity_field = implode(",", $image_ids);
 
 system_messages(elgg_echo("gallery_field:files_uploaded").": " . $count_added);
 
-forward("/routes/view/{$entity->guid}/".urlencode($entity->name)."#editor_".$entity_field);
+forward(REFERRER."#editor_".$entity_field);
