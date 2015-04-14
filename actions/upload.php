@@ -2,7 +2,6 @@
 
 /**
  * Upload images action
- * returns array of image ids, separated by ','
  */
 
 elgg_load_library('elgg:gallery_field');
