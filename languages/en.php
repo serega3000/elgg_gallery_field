@@ -14,6 +14,7 @@ add_translation('en', array(
 	'gallery_field:only_jpg' => "Only jpg files supported",
 	'gallery_field:bad_file' => "Bad jpg file",
 	'gallery_field:files_uploaded' => "Files uploaded",
+	'gallery_field:max_upload_exceed' => "File too big",
 	
 	
 ));

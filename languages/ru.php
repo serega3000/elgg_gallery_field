@@ -13,7 +13,8 @@ add_translation('ru', array(
 	"gallery_field:loading" => "Отправка файлов на сервер... Не перезагружайте страницу.",
 	'gallery_field:only_jpg' => "Поддерживаются только файлы формата jpg",
 	'gallery_field:bad_file' => "Не удалось прочитать файл",
-	'gallery_field:files_uploaded' => "FЗагружено файлов",
+	'gallery_field:files_uploaded' => "Загружено файлов",
+	'gallery_field:max_upload_exceed' => "Файл слишком большой",
 	
 ));
 
