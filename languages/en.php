@@ -15,6 +15,7 @@ add_translation('en', array(
 	'gallery_field:bad_file' => "Bad jpg file",
 	'gallery_field:files_uploaded' => "Files uploaded",
 	'gallery_field:max_upload_exceed' => "File too big",
+	'item:object:gallery_field_image' => "Gallery field images"
 	
 	
 ));

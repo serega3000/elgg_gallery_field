@@ -15,6 +15,7 @@ add_translation('ru', array(
 	'gallery_field:bad_file' => "Не удалось прочитать файл",
 	'gallery_field:files_uploaded' => "Загружено файлов",
 	'gallery_field:max_upload_exceed' => "Файл слишком большой",
+	'item:object:gallery_field_image' => "Изображения галлереи"
 	
 ));
 
