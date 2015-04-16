@@ -3,6 +3,7 @@
 class GalleryFieldImage extends \ElggFile{
 	
 	const SUBTYPE = "gallery_field_image";
+	private $icon_sizes = array('small','tiny');
 	
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
@@ -47,6 +48,7 @@ class GalleryFieldImage extends \ElggFile{
 		{
 			$thumb_image->delete();
 		}
+		$this->deleteIconFiles();
 
 		return parent::delete();
 	}	
@@ -191,6 +193,87 @@ class GalleryFieldImage extends \ElggFile{
 				$crop['x2'],
 				$crop['y2'],
 				true);
-	}		
+	}	
+	
+	public function getIconFile($size = 'small')
+	{
+		if(false == in_array($size, $this->icon_sizes))
+		{
+			throw new Exception("bad size");
+		}
+		$icon_property = "icon_file_id_".$size;
+		$icon_file_id = $this->$icon_property;
+		if($icon_file_id == null)
+		{
+			$icon_file_id = $this->createIconFile($size);
+			$this->$icon_property = $icon_file_id;
+		}
+		return get_entity($icon_file_id);		
+	}
+	
+	protected function createIconFile($size = 'small')
+	{
+		$file = new ElggFile();
+		$sizes = elgg_get_config('icon_sizes');		
+		$tmp_name = tempnam("asd","qerty");
+		$contents = "";
+		$success = false;
+		if ($this->open("read")) {
+
+			$contents = $this->read($this->getSize());		
+			if ($contents) {
+				file_put_contents($tmp_name, $contents);
+				$success = true;
+			}
+			$this->close();
+		}				
+		
+		if($success == false)
+		{
+			register_error("cant read file");
+			return null;
+		}
+		
+		$imgsizearray = getimagesize($tmp_name);
+		
+		if ($imgsizearray == false) {
+			register_error("bad file");
+			return null;
+		}
+		
+		
+
+		$width = $imgsizearray[0];
+		$height = $imgsizearray[1];			
+		
+		$size_info = $sizes[$size];
+		$file->setFilename(self::genGUID());
+		$file->access_id = 2;		
+		$file->setMimeType($this->getMimeType());		
+		$file->save();		
+		$file->open("write");
+		$file->write(self::cropImage($tmp_name,$width,$height, $size_info['w'], $size_info['h']));
+		$file->close();	
+		
+		
+		unlink($tmp_name);
+		
+		return $file->guid;
+	}
+	
+	protected function deleteIconFiles()
+	{
+		$sizes = elgg_get_config('icon_sizes');
+		foreach(array_keys($sizes) as $size_name)
+		{
+			$icon_property = "icon_file_id_".$size_name;
+			$icon_file_id = $this->$icon_property;
+			if($icon_file_id != null)
+			{
+				get_entity($icon_file_id)->delete();
+				$this->$icon_property = null;
+			}
+		}
+	}
 	
 }

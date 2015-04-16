@@ -63,11 +63,15 @@ function gallery_field_delete_images()
 
 function gallery_field_show_image($image_id, $size = "default")
 {
-	/* @var $image ElggFile */
+	/* @var $image GalleryFieldImage */
 	$image = get_entity($image_id);
 	if($size == 'thumb')
 	{
 		$image = get_entity($image->thumb_file_guid);
+	}
+	elseif(in_array($size, array('small','tiny')))
+	{
+		$image = $image->getIconFile($size);
 	}
 	
 	
@@ -128,4 +132,44 @@ function gallery_field_save_sort()
 	
 	$entity->$field = implode(",", $sort_ids);
 	$entity->save();
+}
+
+function gallery_field_get_entity_icon_file_id(ElggEntity $entity, $field = 'images')
+{
+	$image_ids = gallery_field_image_ids_from_value($entity->$field);	
+
+	if(count($image_ids) == 0)
+	{
+		return null;
+	}
+	
+	return $image_ids[0];
+}
+
+function gallery_field_get_entity_icon_url(ElggEntity $entity, $size = 'small', $field = 'images')
+{
+	$id = gallery_field_get_entity_icon_file_id($entity, $field);
+
+	if($id == null)
+	{
+		return null;
+	}
+
+	return "/gallery_field_image/{$id}/{$size}";			
+}
+
+/**
+ * 
+ * @param ElggEntity $entity
+ * @return ElggFile
+ */
+function gallery_field_get_entity_icon_file(ElggEntity $entity)
+{	
+	$id = gallery_field_get_entity_icon_file_id($entity, $field);
+	if($id == null)
+	{
+		return null;
+	}
+
+	return get_entity($id);		
 }
